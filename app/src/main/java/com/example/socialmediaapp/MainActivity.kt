@@ -18,6 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.socialmediaapp.navigation.NavGraph
+import com.example.socialmediaapp.screens.LoginScreen
+import com.example.socialmediaapp.screens.SignUpScreen
 import com.example.socialmediaapp.ui.theme.SocialMediaAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,8 +34,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    NavGraph(navController = navController)
+//                    val navController = rememberNavController()
+//                    NavGraph(navController = navController)
+                    SignUpScreen()
                 }
             }
         }
