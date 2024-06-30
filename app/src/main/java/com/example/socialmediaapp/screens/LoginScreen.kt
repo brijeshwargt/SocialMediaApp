@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,13 +32,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.example.socialmediaapp.navigation.Routes
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navHostController: NavHostController) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -49,7 +54,9 @@ fun LoginScreen() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = if (!isSystemInDarkTheme()) Color.LightGray else Color.Transparent)
     ) {
         Spacer(modifier = Modifier.height(100.dp))
         Text(
@@ -57,6 +64,7 @@ fun LoginScreen() {
             fontWeight = FontWeight.Bold,
             fontSize = 80.sp,
             letterSpacing = 2.sp,
+//            color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(100.dp))
         OutlinedTextField(
@@ -129,8 +137,12 @@ fun LoginScreen() {
         Row {
             Text(text = "New User? ")
             Text(
-                text = "Sign Up",
-                modifier = Modifier.clickable { }
+                text = "Create account",
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable {
+                    navHostController.navigate(Routes.SignUp.routes)
+                },
+                fontWeight = FontWeight.W600
             )
         }
     }

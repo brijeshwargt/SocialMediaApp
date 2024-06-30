@@ -1,7 +1,9 @@
 package com.example.socialmediaapp.screens
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,9 +42,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.socialmediaapp.navigation.Routes
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navHostController: NavHostController) {
 
     var name by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
@@ -58,13 +63,14 @@ fun SignUpScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
+            .background(color = if (!isSystemInDarkTheme()) Color.LightGray else Color.Transparent)
     ) {
         Text(
             text = "Sign Up...",
             fontWeight = FontWeight.Bold,
             fontSize = 70.sp,
             letterSpacing = 2.sp,
-            color = MaterialTheme.colorScheme.primary
+//            color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(100.dp))
         OutlinedTextField(
@@ -184,7 +190,7 @@ fun SignUpScreen() {
         Spacer(modifier = Modifier.height(50.dp))
         OutlinedButton(
             onClick = { /*TODO*/ },
-            border = BorderStroke(.5.dp, MaterialTheme.colorScheme.primary),
+            border = BorderStroke(.5.dp, MaterialTheme.colorScheme.onBackground),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 120.dp)
@@ -197,7 +203,12 @@ fun SignUpScreen() {
             Text(
                 text = "Login",
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable { },
+                modifier = Modifier.clickable {
+                    navHostController.navigate(Routes.Login.routes) {
+                        popUpTo(navHostController.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                },
                 fontWeight = FontWeight.W600
             )
         }

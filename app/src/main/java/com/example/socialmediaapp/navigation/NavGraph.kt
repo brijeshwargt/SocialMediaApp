@@ -11,9 +11,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.socialmediaapp.screens.AddPostScreen
 import com.example.socialmediaapp.screens.BottomNavigation
 import com.example.socialmediaapp.screens.HomeScreen
+import com.example.socialmediaapp.screens.LoginScreen
 import com.example.socialmediaapp.screens.NotificationScreen
 import com.example.socialmediaapp.screens.ProfileScreen
 import com.example.socialmediaapp.screens.SearchScreen
+import com.example.socialmediaapp.screens.SignUpScreen
 import com.example.socialmediaapp.screens.SplashScreen
 
 @Composable
@@ -46,8 +48,17 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Routes.BottomNav.routes) {
-            BottomNavigation(navController = navController)
+            BottomNavigation(navController)
         }
+
+        composable(Routes.Login.routes) {
+            LoginScreen(navController)
+        }
+
+        composable(Routes.SignUp.routes) {
+            SignUpScreen(navController)
+        }
+
     }
 
 }
