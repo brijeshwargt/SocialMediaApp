@@ -307,7 +307,6 @@ fun SignUpScreen(navHostController: NavHostController) {
                 }
             )
         }
-
         item {
             Spacer(modifier = Modifier.height(30.dp))
             OutlinedButton(
@@ -339,7 +338,6 @@ fun SignUpScreen(navHostController: NavHostController) {
                 Text(text = "Sign Up", fontSize = 25.sp, fontWeight = FontWeight.Thin)
             }
         }
-
         item {
 
             Spacer(modifier = Modifier.height(10.dp))
