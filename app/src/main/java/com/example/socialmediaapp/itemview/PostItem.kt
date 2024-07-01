@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
@@ -47,7 +49,7 @@ fun PostItem(
 ) {
 
     ElevatedCard(
-        shape = RoundedCornerShape(10),
+        shape = RoundedCornerShape(20.dp),
         modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp)
     ) {
         Column(
@@ -64,6 +66,7 @@ fun PostItem(
                     Image(
                         painter = rememberAsyncImagePainter(model = users.imageUrl),
                         contentDescription = "profile photo",
+                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
@@ -94,7 +97,7 @@ fun PostItem(
                         contentDescription = "posted image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .height(256.dp)
+                            .height(300.dp)
                             .clip(RoundedCornerShape(5))
                     )
                 }

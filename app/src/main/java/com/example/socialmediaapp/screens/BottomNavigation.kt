@@ -33,10 +33,10 @@ fun BottomNavigation(navController: NavHostController) {
     ) {paddingValues ->
         NavHost(navController = navController1, startDestination = Routes.Home.routes, modifier = Modifier.padding(paddingValues)) {
             composable(Routes.Home.routes) {
-                HomeScreen(navController1)
+                HomeScreen(navController)
             }
             composable(Routes.Search.routes) {
-                SearchScreen()
+                SearchScreen(navController)
             }
             composable(Routes.AddPost.routes) {
                 AddPostScreen(navController1)

@@ -43,19 +43,25 @@ class AuthViewModel : ViewModel() {
                     _firebaseUser.postValue(auth.currentUser)
 
                     getData(auth.currentUser?.uid, context)
-                }
-                else {
+                } else {
                     _error.postValue(it.exception?.message ?: "Enter correct details")
                 }
             }
     }
 
     private fun getData(uid: String?, context: Context) {
-        userRef.child(uid!!).addListenerForSingleValueEvent(object: ValueEventListener{
+        userRef.child(uid!!).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userData = snapshot.getValue(UserModel::class.java)
                 if (userData != null) {
-                    SharedPref.storeData(userData.name, userData.email, userData.userName, userData.bio, userData.imageUrl, context)
+                    SharedPref.storeData(
+                        userData.name,
+                        userData.email,
+                        userData.userName,
+                        userData.bio,
+                        userData.imageUrl,
+                        context
+                    )
                 }
             }
 
@@ -79,7 +85,16 @@ class AuthViewModel : ViewModel() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     _firebaseUser.postValue(auth.currentUser)
-                    saveImage(email, password, name, bio, userName, imageUri, auth.currentUser?.uid, context)
+                    saveImage(
+                        email,
+                        password,
+                        name,
+                        bio,
+                        userName,
+                        imageUri,
+                        auth.currentUser?.uid,
+                        context
+                    )
                 } else {
                     _error.postValue("something went wrong")
                 }

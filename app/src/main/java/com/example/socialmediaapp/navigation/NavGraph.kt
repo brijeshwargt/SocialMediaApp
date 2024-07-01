@@ -28,7 +28,7 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Routes.Search.routes) {
-            SearchScreen()
+            SearchScreen(navController)
         }
 
         composable(Routes.AddPost.routes) {
