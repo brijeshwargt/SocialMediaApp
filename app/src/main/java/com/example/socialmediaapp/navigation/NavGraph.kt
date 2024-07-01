@@ -40,7 +40,7 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Routes.Profile.routes) {
-            ProfileScreen()
+            ProfileScreen(navController)
         }
 
         composable(Routes.Splash.routes) {
