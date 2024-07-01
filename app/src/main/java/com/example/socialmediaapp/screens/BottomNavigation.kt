@@ -45,7 +45,7 @@ fun BottomNavigation(navController: NavHostController) {
                 NotificationScreen()
             }
             composable(Routes.Profile.routes){
-                ProfileScreen()
+                ProfileScreen(navController)
             }
         }
 
