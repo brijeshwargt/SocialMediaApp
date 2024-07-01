@@ -1,7 +1,5 @@
 package com.example.socialmediaapp.model
 
-import android.net.Uri
-import androidx.core.net.toUri
 
 data class UserModel(
    val email: String = "",
