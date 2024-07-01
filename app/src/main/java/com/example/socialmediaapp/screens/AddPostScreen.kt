@@ -220,27 +220,28 @@ fun AddPostScreen(navHostController: NavHostController) {
                         fontSize = 14.sp
                     )
 
-                    OutlinedButton(onClick = {
-                        if (imageUri == null) {
-                            postViewModel.saveData(
-                                postContent,
-                                FirebaseAuth.getInstance().currentUser!!.uid,
-                                ""
+                    if (postContent.isNotEmpty()) {
+                        OutlinedButton(onClick = {
+                            if (imageUri == null) {
+                                postViewModel.saveData(
+                                    postContent,
+                                    FirebaseAuth.getInstance().currentUser!!.uid,
+                                    ""
+                                )
+                            } else {
+                                postViewModel.saveImage(
+                                    postContent,
+                                    FirebaseAuth.getInstance().currentUser!!.uid,
+                                    imageUri!!
+                                )
+                            }
+                        }
+                        ) {
+                            Text(
+                                text = "Post",
+                                fontSize = 20.sp
                             )
                         }
-                        else {
-                            postViewModel.saveImage(
-                                postContent,
-                                FirebaseAuth.getInstance().currentUser!!.uid,
-                                imageUri!!
-                            )
-                        }
-                    }
-                    ) {
-                        Text(
-                            text = "Post",
-                            fontSize = 20.sp
-                        )
                     }
                 }
             }
@@ -264,10 +265,10 @@ fun AddPostTopBar(navHostController: NavHostController) {
         navigationIcon = {
             IconButton(onClick = {
                 navHostController.navigate(Routes.Home.routes) {
-                popUpTo(navHostController.graph.startDestinationId) {
-                    inclusive = true
+                    popUpTo(navHostController.graph.startDestinationId) {
+                        inclusive = true
+                    }
                 }
-            }
             }) {
                 Icon(imageVector = Icons.Filled.Close, contentDescription = "back arrow")
             }

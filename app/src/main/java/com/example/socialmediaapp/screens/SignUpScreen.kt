@@ -78,6 +78,7 @@ fun SignUpScreen(navHostController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    var isErrorInUsername by remember { mutableStateOf(false) }
     var isErrorInEmail by remember { mutableStateOf(false) }
     var isErrorInPassword by remember { mutableStateOf(false) }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -202,6 +203,7 @@ fun SignUpScreen(navHostController: NavHostController) {
                 value = username,
                 onValueChange = {
                     username = it
+                    isErrorInUsername = username.length > 20
                 },
                 label = {
                     Text(text = "Username")
@@ -213,6 +215,12 @@ fun SignUpScreen(navHostController: NavHostController) {
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text
                 ),
+                isError = isErrorInUsername,
+                supportingText = {
+                    if(isErrorInUsername) {
+                        Text(text = "Username is too long")
+                    }
+                },
                 singleLine = true,
             )
         }
