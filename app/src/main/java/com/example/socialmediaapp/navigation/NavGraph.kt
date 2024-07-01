@@ -30,7 +30,7 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Routes.AddPost.routes) {
-            AddPostScreen()
+            AddPostScreen(navController)
         }
 
         composable(Routes.Notification.routes) {

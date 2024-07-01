@@ -39,7 +39,7 @@ fun BottomNavigation(navController: NavHostController) {
                 SearchScreen()
             }
             composable(Routes.AddPost.routes) {
-                AddPostScreen()
+                AddPostScreen(navController1)
             }
             composable(Routes.Notification.routes) {
                 NotificationScreen()
