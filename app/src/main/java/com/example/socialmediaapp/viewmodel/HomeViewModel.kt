@@ -19,10 +19,10 @@ import java.util.UUID
 class HomeViewModel : ViewModel() {
 
     private val database = FirebaseDatabase.getInstance()
-    private val post = database.getReference("posts")
+    val postRef = database.getReference("posts")
 
-    private var _postsAndUsers = MutableLiveData<List<Pair<PostModel, UserModel>>>()
-    var postsAndUsers: LiveData<List<Pair<PostModel, UserModel>>> = _postsAndUsers
+    private var _postsAndUsers = MutableLiveData<List<Pair<PostModel,UserModel>>>()
+    var postsAndUsers: LiveData<List<Pair<PostModel,UserModel>>> = _postsAndUsers
 
     init {
         fetchPostsAndUsers {
@@ -30,19 +30,19 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private fun fetchPostsAndUsers(onResult: (List<Pair<PostModel, UserModel>>) -> Unit) {
+    private fun fetchPostsAndUsers(onResult: (List<Pair<PostModel,UserModel>>) -> Unit) {
 
-        post.addValueEventListener(object : ValueEventListener {
+        postRef.addValueEventListener(object : ValueEventListener{
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 val result = mutableListOf<Pair<PostModel, UserModel>>()
-
                 for (postSnapshot in snapshot.children) {
                     val post = postSnapshot.getValue(PostModel::class.java)
-                    if (post != null) {
-                        fetchUserFromPost(post) { user ->
-                            result.add(0, post to user)
+                    post.let {
+                        fetchUserFromPost(it!!) { user ->
+                            result.add(0, it to user)
+
                             if (result.size == snapshot.childrenCount.toInt()) {
                                 onResult(result)
                             }
@@ -58,17 +58,12 @@ class HomeViewModel : ViewModel() {
         })
     }
 
-    fun fetchUserFromPost(post: PostModel, onResult: (UserModel) -> Unit) {
-
+    fun fetchUserFromPost(post: PostModel, onResult:(UserModel) -> Unit) {
         database.getReference("users").child(post.userId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-
+            .addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-
                     val user = snapshot.getValue(UserModel::class.java)
-                    if (user!= null) {
-                        onResult(user)
-                    }
+                    user?.let(onResult)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
