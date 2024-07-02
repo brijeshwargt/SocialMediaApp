@@ -30,10 +30,12 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private fun fetchPostsAndUsers(onResult: (List<Pair<PostModel,UserModel>>) -> Unit) {
+    fun fetchPostsAndUsers(onResult: (List<Pair<PostModel,UserModel>>) -> Unit) {
 
         post.addValueEventListener(object : ValueEventListener{
+
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 val result = mutableListOf<Pair<PostModel, UserModel>>()
                 for (postSnapshot in snapshot.children) {
                     val post = postSnapshot.getValue(PostModel::class.java)

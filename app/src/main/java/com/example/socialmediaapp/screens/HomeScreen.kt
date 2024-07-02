@@ -38,8 +38,6 @@ fun HomeScreen(navHostController: NavHostController) {
 
     val homeViewModel: HomeViewModel = viewModel()
     val postsAndUsers by homeViewModel.postsAndUsers.observeAsState(null)
-
-
     Scaffold(
         topBar = {
             TopAppBar(

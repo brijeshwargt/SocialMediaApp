@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -131,10 +132,10 @@ fun OtherUserScreen(navHostController: NavHostController, uid: String?) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = users!!.name)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "${followerList!!.size}")
+                    Text(text = "${followerList!!.size} Followers", fontFamily = FontFamily.Monospace)
 
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "${followingList!!.size}")
+                    Text(text = "${followingList!!.size} Following", fontFamily = FontFamily.Monospace)
                 }
 
                 Image(
