@@ -21,6 +21,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,12 +44,18 @@ fun HomeScreen(navHostController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Column(
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "Vichaar", fontSize = 30.sp, fontWeight = FontWeight.Bold)
-                        Text(text = " ~ post your views", fontSize = 15.sp)
+                        Text(text = "Vichaar : ", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+                        Text(
+                            text = "post your views",
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.Bold,
+                            fontStyle = FontStyle.Normal
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

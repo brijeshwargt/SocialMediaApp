@@ -258,8 +258,8 @@ fun AddPostTopBar(navHostController: NavHostController) {
         title = {
             Text(
                 text = "Add Post",
+                fontSize = 27.sp,
                 fontWeight = FontWeight.ExtraBold,
-                letterSpacing = 1.5.sp
             )
         },
         navigationIcon = {
