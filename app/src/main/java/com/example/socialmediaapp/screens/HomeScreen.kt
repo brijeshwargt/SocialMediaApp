@@ -1,5 +1,6 @@
 package com.example.socialmediaapp.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -38,6 +39,7 @@ fun HomeScreen(navHostController: NavHostController) {
 
     val homeViewModel: HomeViewModel = viewModel()
     val postsAndUsers by homeViewModel.postsAndUsers.observeAsState(null)
+
     Scaffold(
         topBar = {
             TopAppBar(
