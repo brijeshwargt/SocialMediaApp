@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -27,10 +28,6 @@ fun UserItem(
     users: UserModel,
     navHostController: NavHostController
 ) {
-    OutlinedCard(
-        shape = RoundedCornerShape(30),
-        modifier = Modifier.padding(start = 5.dp, end = 5.dp, top = 5.dp)
-    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -44,7 +41,7 @@ fun UserItem(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(60.dp)
-                    .clip(RoundedCornerShape(30))
+                    .clip(CircleShape)
             )
             Spacer(modifier = Modifier.width(10.dp))
             Column {
@@ -55,5 +52,4 @@ fun UserItem(
                 ) // some misplaced of name and bio LOL
             }
         }
-    }
 }

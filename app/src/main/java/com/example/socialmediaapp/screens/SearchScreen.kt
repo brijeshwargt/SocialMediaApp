@@ -55,38 +55,32 @@ fun SearchScreen(navHostController: NavHostController) {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
         )
-        TextField(
-            value = searchName,
-            onValueChange = {
-                searchName = it
-            },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "search icon",
-                    modifier = Modifier.size(30.dp)
-                )
-            },
-            textStyle = TextStyle(
-                fontSize = 18.sp,
-                fontWeight = FontWeight.W400,
-                fontFamily = FontFamily.Monospace
-            ),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent
-            ),
-            modifier = Modifier.fillMaxWidth()
+        TextField(value = searchName, onValueChange = {
+            searchName = it
+        }, leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "search icon",
+                modifier = Modifier.size(30.dp)
+            )
+        }, textStyle = TextStyle(
+            fontSize = 18.sp, fontWeight = FontWeight.W400, fontFamily = FontFamily.Monospace
+        ), colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent
+        ), modifier = Modifier.fillMaxWidth()
         )
 
         LazyColumn() {
 
-            val filterItems = userList?.filter { it.userName.contains(searchName, ignoreCase = true) }
+            val filterItems = userList?.filter {
+                it.userName.contains(searchName, ignoreCase = true) ||
+                        it.bio.contains(searchName, ignoreCase = true)
+            }
 
-            items(filterItems?: emptyList()) { pairs ->
+            items(filterItems ?: emptyList()) { pairs ->
                 UserItem(
-                    users = pairs,
-                    navHostController
+                    users = pairs, navHostController
                 )
 
             }
