@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +35,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialmediaapp.itemview.PostItem
-import com.example.socialmediaapp.model.UserModel
 import com.example.socialmediaapp.navigation.Routes
 import com.example.socialmediaapp.utils.SharedPref
 import com.example.socialmediaapp.viewmodel.AuthViewModel
@@ -45,7 +43,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navHostController: NavHostController) {
+fun OtherUserScreen(navHostController: NavHostController, uid: String?) {
 
     val context = LocalContext.current
 
@@ -54,27 +52,20 @@ fun ProfileScreen(navHostController: NavHostController) {
 
     val profileViewModel: ProfileViewModel = viewModel()
     val posts by profileViewModel.posts.observeAsState(null)
-
+    val users by profileViewModel.users.observeAsState(null)
     val followerList by profileViewModel.followerList.observeAsState(null)
     val followingList by profileViewModel.followingList.observeAsState(null)
 
+
+    profileViewModel.fetchPosts(uid!!)
+    profileViewModel.fetchUser(uid)
+    profileViewModel.getFollowers(uid)
+    profileViewModel.getFollowing(uid)
+
     var currentUserId = ""
+
     if (FirebaseAuth.getInstance().currentUser != null) {
         currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
-    }
-    if (currentUserId != "") {
-        profileViewModel.getFollowers(currentUserId)
-        profileViewModel.getFollowers(currentUserId)
-    }
-
-    val user = UserModel(
-        name = SharedPref.getName(context),
-        imageUrl = SharedPref.getImage(context),
-        userName = SharedPref.getUserName(context)
-    )
-
-    if (firebaseUser != null) {
-        profileViewModel.fetchPosts(firebaseUser!!.uid)
     }
 
     LaunchedEffect(firebaseUser) {
@@ -97,13 +88,16 @@ fun ProfileScreen(navHostController: NavHostController) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "My Profile", fontSize = 27.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "User Profile", fontSize = 27.sp, fontWeight = FontWeight.Bold)
                         Text(
-                            text = "Logout",
+                            text = if (followingList != null && followerList!!.isNotEmpty() && followerList!!.contains(currentUserId))"Following" else "Follow",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
-                            fontFamily = FontFamily.Monospace,
-                            modifier = Modifier.clickable { authViewModel.logout() }
+                            modifier = Modifier.clickable {
+                                if (currentUserId != "") {
+                                    profileViewModel.followUsers(uid, currentUserId)
+                                }
+                            }
                         )
                     }
                 },
@@ -124,27 +118,27 @@ fun ProfileScreen(navHostController: NavHostController) {
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text(
-                        text = SharedPref.getBio(context),
+                        text = users!!.bio,
                         fontSize = 28.sp,
                         fontWeight = FontWeight.ExtraBold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = SharedPref.getUserName(context),
+                        text = users!!.userName,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = SharedPref.getName(context))
+                    Text(text = users!!.name)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "${followerList!!.size} Follower", fontFamily = FontFamily.Monospace)
+                    Text(text = "${followerList!!.size}")
 
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "${followingList!!.size} Following", fontFamily = FontFamily.Monospace)
+                    Text(text = "${followingList!!.size}")
                 }
 
                 Image(
-                    painter = rememberAsyncImagePainter(model = SharedPref.getImage(context)),
+                    painter = rememberAsyncImagePainter(model = users!!.imageUrl),
                     contentDescription = "profile pic",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -154,11 +148,11 @@ fun ProfileScreen(navHostController: NavHostController) {
                 )
             }
 
-            LazyColumn() {
+            LazyColumn {
                 items(posts ?: emptyList()) { pair ->
                     PostItem(
                         post = pair,
-                        users = user,
+                        users = users!!,
                         navHostController = navHostController,
                         userId = SharedPref.getUserName(context)
                     )
@@ -167,5 +161,4 @@ fun ProfileScreen(navHostController: NavHostController) {
         }
 
     }
-
 }

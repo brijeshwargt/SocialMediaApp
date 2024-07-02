@@ -133,7 +133,7 @@ fun AddPostScreen(navHostController: NavHostController) {
                             .clip(CircleShape)
                     )
                     Text(
-                        text = SharedPref.getName(context),
+                        text = SharedPref.getBio(context),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 1.sp,

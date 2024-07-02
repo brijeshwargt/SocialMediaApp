@@ -1,18 +1,15 @@
 package com.example.socialmediaapp.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.socialmediaapp.screens.AddPostScreen
 import com.example.socialmediaapp.screens.BottomNavigation
 import com.example.socialmediaapp.screens.HomeScreen
 import com.example.socialmediaapp.screens.LoginScreen
 import com.example.socialmediaapp.screens.NotificationScreen
+import com.example.socialmediaapp.screens.OtherUserScreen
 import com.example.socialmediaapp.screens.ProfileScreen
 import com.example.socialmediaapp.screens.SearchScreen
 import com.example.socialmediaapp.screens.SignUpScreen
@@ -57,6 +54,11 @@ fun NavGraph(navController: NavHostController) {
 
         composable(Routes.SignUp.routes) {
             SignUpScreen(navController)
+        }
+
+        composable(Routes.OtherUser.routes) {
+            val data = it.arguments?.getString("data")
+            OtherUserScreen(navController, data)
         }
     }
 
